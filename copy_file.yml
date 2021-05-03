@@ -1,5 +1,6 @@
 ---
-- host; all
+
+- hosts: all
   become: true
   pre_tasks:
 
@@ -7,7 +8,6 @@
     tags: apache 
     dnf:
       name:
-        - update_cache: true
         - httpd
         - php
       state: latest
@@ -21,3 +21,20 @@
       owner: root
       group: root
       mode: 0644
+
+  - name: ensure httpd is running
+    service:
+      name: httpd 
+      state: started
+
+  - name: permit traffic in default zone for https service
+    ansible.posix.firewalld:
+      service: https
+      permanent: yes
+      state: enabled
+
+  - name: Restart the firewalld service to load in the firewall changes
+    service: 
+      name: firewalld 
+      state: restarted
+
