@@ -1,0 +1,15 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: "Install appache" 
+    yum:
+      name: "{{ packages }}"
+      vars:
+       packages:
+        - httpd 
+        - httpd-tools
+      state: latest
+    when: ansible_distribution ==  "CentOS" 

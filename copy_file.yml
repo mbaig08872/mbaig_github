@@ -1,0 +1,23 @@
+---
+- host; all
+  become: true
+  pre_tasks:
+
+  - name: install apache and php
+    tags: apache 
+    dnf:
+      name:
+        - update_cache: true
+        - httpd
+        - php
+      state: latest
+    when: ansible_distribution == "CentOS"
+
+  - name: copy htmal_file file to all servere
+    tags: apache
+    copy:
+      src: htmal_file
+      dest: /var/www/html/index.html
+      owner: root
+      group: root
+      mode: 0644
