@@ -1,0 +1,95 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+  
+  - name: create group db2grp1
+    group:
+      name: db2grp1
+      gid: 1001
+      state: present
+  
+  - name: create group dba
+    group:
+      name: dba
+      gid: 1002
+      state: present
+
+  - name: create group db2fenc1
+    group:
+      name: db2fenc1
+      gid: 1003
+      state: present
+
+  - name: create group dasadm
+    group:
+      name: dasadm
+      gid: 1004
+      state: present
+
+  - name: create user inst1151
+    user:
+      name: inst1151
+      uid: 1001
+      comment: DB2 user inst1151
+      shell: /usr/bin/bash
+      group: db2grp1
+      groups: dasadm,db2grp1,dba,db2fenc1 
+      home: /home/db2/V11.5/inst1151
+      create_home: yes
+      state: present
+      generate_ssh_key: yes
+
+  - name: create user inst1152
+    user:
+      name: inst1152
+      uid: 1002
+      comment: DB2 user inst1152
+      shell: /usr/bin/bash
+      group: db2grp1
+      groups: dasadm,db2grp1,dba,db2fenc1
+      home: /home/db2/V11.5/inst1152
+      create_home: yes
+      state: present
+      generate_ssh_key: yes	
+
+  - name: create user db2admin
+    user:
+      name: db2admin
+      uid: 1003
+      comment: DB2 admin user db2admin
+      shell: /usr/bin/bash
+      group: dasadm
+      groups: dasadm,db2grp1,dba,db2fenc1 
+      home: /home/db2/V11.5/db2admin
+      create_home: yes
+      state: present
+      generate_ssh_key: no
+
+  - name: create user part1151
+    user:
+      name: part1151
+      uid: 1004
+      comment: DB2 DPF user part1151
+      shell: /usr/bin/bash
+      group: db2grp1
+      groups: dasadm,db2grp1,dba,db2fenc1
+      home: /home/db2/V11.5/part1151
+      create_home: yes
+      state: present
+      generate_ssh_key: yes
+
+  - name: create user db2fenc1
+    user:
+      name: db2fenc1
+      uid: 1005
+      comment: DB2 fenc user db2fenc1
+      shell: /usr/bin/bash
+      group: db2fenc1
+      groups: dasadm,db2grp1,dba,db2fenc1
+      home: /home/db2/V11.5/db2fenc1
+      create_home: yes
+      state: present	  
+      generate_ssh_key: no
+

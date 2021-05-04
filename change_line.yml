@@ -1,0 +1,21 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: change e-mail for admin
+    tags: apache 
+    lineinfile:
+      path: /etc/httpd/conf/httpd.conf
+      regexp: '^ServerAdmin'
+      line: ServerAdmin mbaig@localhost.com
+    when: ansible_distribution == "CentOS"
+    register: pizza
+
+  - name: restart httpd services
+    tags: apache
+    service:
+      name: httpd
+      state: restarted
+    when: pizza.changed
