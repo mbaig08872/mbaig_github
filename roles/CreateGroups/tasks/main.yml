@@ -1,0 +1,23 @@
+- name: create group db2grp1
+  group:
+    name: db2grp1
+    gid: 1001
+    state: present
+
+- name: create group dba
+  group:
+    name: dba
+    gid: 1002
+    state: present
+
+- name: create group db2fenc1
+  group:
+    name: db2fenc1
+    gid: 1003
+    state: present
+
+- name: create group dasadm
+  group:
+    name: dasadm
+    gid: 1004
+    state: present
